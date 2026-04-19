@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barangay Sync Scheduler</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen p-6">
+
+<div class="max-w-6xl mx-auto">
+
+    <a href="index.html" class="text-green-700 hover:underline mb-4 inline-block">← Back</a>
+
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-3xl font-bold text-green-900">Barangay Sync Scheduler</h1>
+            <p class="text-green-600">All barangays with preset schedules</p>
+        </div>
+        <button onclick="openModal()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+            + Add Schedule
+        </button>
+    </div>
+
+    <!-- FILTER -->
+    <div class="bg-white p-4 rounded-lg shadow mb-6 flex gap-4">
+        <input id="search" type="text" placeholder="Search..." class="flex-1 border p-2 rounded">
+        <select id="filter" class="border p-2 rounded">
+            <option value="all">All Barangays</option>
+        </select>
+    </div>
+
+    <div id="list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg w-[320px]">
+        <h2 class="text-lg font-bold mb-4">Schedule</h2>
+
+        <select id="barangay" class="w-full border p-2 mb-2 rounded"></select>
+        <input id="day" class="w-full border p-2 mb-2 rounded" placeholder="Day">
+        <input id="time" class="w-full border p-2 mb-2 rounded" placeholder="Time">
+
+        <select id="wasteType" class="w-full border p-2 mb-4 rounded">
+            <option>Biodegradable</option>
+            <option>Non-Biodegradable</option>
+            <option>Recyclable</option>
+            <option>All Waste Types</option>
+        </select>
+
+        <div class="flex justify-end gap-2">
+            <button onclick="closeModal()" class="border px-3 py-1 rounded">Cancel</button>
+            <button onclick="save()" class="bg-green-600 text-white px-3 py-1 rounded">Save</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ALL BARANGAYS
+const barangays = [...new Set([
+"Aduas Centro","Aduas Norte","Aduas Sur","Bagong Sikat","Bagong Buhay","Bakero","Bakod Bayan","Balite","Bangad",
+"Bantug Bulalo","Bantug Norte","Barlis","Barrera District (Pob.)","Bernardo District (Pob.)","Bitas",
+"Bonifacio District (Pob.)","Buliran","Caalibangbangan","Cabu","Campo Tinio","Kapitan Pepe (Pob.)",
+"Cinco-Cinco","City Supermarket (Pob.)","Caudillo","Communal","Cruz Roja","Daang Sarile","Dalampang",
+"Dicarma (Pob.)","Dimasalang (Pob.)","Dionisio S. Garcia","Fatima (Pob.)","General Luna (Pob.)",
+"Ibabao Bana","Imelda District","Isla (Pob.)","Calawagan (Kalawagan)","Kalikid Norte","Kalikid Sur",
+"Lagare","M. S. Garcia","Mabini Extension","Mabini Homesite","Macatbong","Magsaysay District",
+"Matadero (Pob.)","Lourdes (Matungal-tungal)","Mayapyap Norte","Mayapyap Sur","Melojavilla (Pob.)",
+"Obrero","Padre Crisostomo","Pagas","Palagay","Pamaldan","Pangatian","Patalac","Polilio","Pula",
+"Quezon District (Pob.)","Rizdelis (Pob.)","Samon","San Isidro","San Josef Norte","San Josef Sur",
+"San Juan Pob. (Accfa)","San Roque Norte","San Roque Sur","Sanbermicristi (Pob.)","Sangitan",
+"Santa Arcadia","Sumacab Norte","Valdefuente","Valle Cruz","Vijandre District (Pob.)",
+"Villa Ofelia-Caridad","Zulueta District (Pob.)","Nabao (Pob.)","Padre Burgos (Pob.)","Talipapa",
+"Hermogenes C. Concepcion, Sr.","Sapang","Sumacab Este","Sumacab South","Caridad","Magsaysay South",
+"Maria Theresa","Sangitan East","Santo Niño"
+])].sort();
+
+// Populate dropdowns
+const filter = document.getElementById("filter");
+const barangaySelect = document.getElementById("barangay");
+
+barangays.forEach(b => {
+    filter.innerHTML += `<option value="${b}">${b}</option>`;
+    barangaySelect.innerHTML += `<option value="${b}">${b}</option>`;
+});
+
+// AUTO-GENERATE SCHEDULES FOR ALL BARANGAYS
+const patterns = [
+  { day: "Monday & Thursday", time: "6:00 AM - 10:00 AM", wasteType: "Biodegradable" },
+  { day: "Tuesday & Friday", time: "6:00 AM - 10:00 AM", wasteType: "Non-Biodegradable" },
+  { day: "Wednesday & Saturday", time: "7:00 AM - 11:00 AM", wasteType: "Recyclable" }
+];
+
+let schedules = [];
+let idCounter = 1;
+
+barangays.forEach((b, index) => {
+    const pattern = patterns[index % patterns.length];
+    schedules.push({
+        id: idCounter++,
+        barangay: b,
+        day: pattern.day,
+        time: pattern.time,
+        wasteType: pattern.wasteType
+    });
+});
+
+let editId = null;
+
+// RENDER
+function render() {
+    const list = document.getElementById("list");
+    const search = document.getElementById("search").value.toLowerCase();
+    const selected = filter.value;
+
+    list.innerHTML = "";
+
+    schedules
+    .filter(s =>
+        (s.barangay.toLowerCase().includes(search) ||
+         s.day.toLowerCase().includes(search)) &&
+        (selected === "all" || s.barangay === selected)
+    )
+    .forEach(s => {
+        list.innerHTML += `
+        <div class="bg-white p-4 rounded-lg shadow border border-green-200">
+            <div class="flex justify-between">
+                <h3 class="font-bold text-green-900">${s.barangay}</h3>
+                <div>
+                    <button onclick="edit(${s.id})">✏️</button>
+                    <button onclick="removeItem(${s.id})">🗑️</button>
+                </div>
+            </div>
+
+            <p class="text-sm text-green-700 mt-2">📅 ${s.day}</p>
+            <p class="text-sm text-green-700">⏰ ${s.time}</p>
+            <p class="text-xs mt-2">${s.wasteType}</p>
+        </div>
+        `;
+    });
+}
+
+// CRUD
+function openModal() {
+    document.getElementById("modal").classList.remove("hidden");
+}
+
+function closeModal() {
+    document.getElementById("modal").classList.add("hidden");
+    editId = null;
+}
+
+function save() {
+    const barangay = barangaySelect.value;
+    const day = document.getElementById("day").value;
+    const time = document.getElementById("time").value;
+    const wasteType = document.getElementById("wasteType").value;
+
+    if (editId) {
+        schedules = schedules.map(s =>
+            s.id === editId ? { ...s, barangay, day, time, wasteType } : s
+        );
+    } else {
+        schedules.push({
+            id: Date.now(),
+            barangay,
+            day,
+            time,
+            wasteType
+        });
+    }
+
+    closeModal();
+    render();
+}
+
+function edit(id) {
+    const s = schedules.find(x => x.id === id);
+    editId = id;
+
+    barangaySelect.value = s.barangay;
+    document.getElementById("day").value = s.day;
+    document.getElementById("time").value = s.time;
+    document.getElementById("wasteType").value = s.wasteType;
+
+    openModal();
+}
+
+function removeItem(id) {
+    if (confirm("Delete this schedule?")) {
+        schedules = schedules.filter(s => s.id !== id);
+        render();
+    }
+}
+
+// EVENTS
+document.getElementById("search").addEventListener("input", render);
+filter.addEventListener("change", render);
+
+render();
+</script>
+
+</body>
+</html> 

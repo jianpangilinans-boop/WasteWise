@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WasteWise - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .progress-bar {
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            height: 0.5rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background-color: #16a34a;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-white p-2 rounded-lg">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold">WasteWise</h1>
+                    <p class="text-xs text-green-100">Smart Waste Management</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="space-y-6">
+            <!-- Page Header -->
+            <div class="flex items-start justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-green-900 flex items-center gap-3">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                        Admin Dashboard
+                    </h1>
+                    <p class="text-green-600 mt-1">LGU Waste Management Control Center</p>
+                </div>
+                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm font-medium">LGU Official</span>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <!-- Total Residents -->
+                <div class="bg-white border-2 border-green-200 rounded-lg p-6 bg-gradient-to-br from-green-50 to-emerald-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </div>
+                    <p class="text-2xl font-bold text-green-900">3,247</p>
+                    <p class="text-xs text-green-600">Total Residents</p>
+                </div>
+
+                <!-- Active Barangays -->
+                <div class="bg-white border-2 border-green-200 rounded-lg p-6 bg-gradient-to-br from-blue-50 to-cyan-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <p class="text-2xl font-bold text-blue-900">90</p>
+                    <p class="text-xs text-blue-600">Active Barangays</p>
+                </div>
+
+                <!-- Scheduled Collections -->
+                <div class="bg-white border-2 border-green-200 rounded-lg p-6 bg-gradient-to-br from-purple-50 to-pink-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <p class="text-2xl font-bold text-purple-900">156</p>
+                    <p class="text-xs text-purple-600">This Month</p>
+                </div>
+
+                <!-- Pending Reports -->
+                <div class="bg-white border-2 border-green-200 rounded-lg p-6 bg-gradient-to-br from-orange-50 to-amber-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </div>
+                    <p class="text-2xl font-bold text-orange-900">8</p>
+                    <p class="text-xs text-orange-600">Pending Reports</p>
+                </div>
+
+                <!-- Pending Feedback -->
+                <div class="bg-white border-2 border-green-200 rounded-lg p-6 bg-gradient-to-br from-teal-50 to-emerald-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                    </div>
+                    <p class="text-2xl font-bold text-teal-900">12</p>
+                    <p class="text-xs text-teal-600">New Feedback</p>
+                </div>
+
+                <!-- Completion Rate -->
+                <div class="bg-white border-2 border-green-200 rounded-lg p-6 bg-gradient-to-br from-green-50 to-lime-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                    <p class="text-2xl font-bold text-green-900">94%</p>
+                    <p class="text-xs text-green-600">Completion Rate</p>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="space-y-6">
+                <!-- Tab Navigation -->
+                <div class="bg-white border-2 border-green-200 rounded-lg p-1">
+                    <div class="grid grid-cols-4 gap-1">
+                        <button onclick="switchTab('overview')" id="tab-overview" class="tab-button active px-4 py-3 rounded-lg font-medium transition-colors bg-green-600 text-white">
+                            Overview
+                        </button>
+                        <button onclick="switchTab('reports')" id="tab-reports" class="tab-button px-4 py-3 rounded-lg font-medium transition-colors hover:bg-green-50">
+                            Reports
+                        </button>
+                        <button onclick="switchTab('performance')" id="tab-performance" class="tab-button px-4 py-3 rounded-lg font-medium transition-colors hover:bg-green-50">
+                            Performance
+                        </button>
+                        <button onclick="switchTab('schedule')" id="tab-schedule" class="tab-button px-4 py-3 rounded-lg font-medium transition-colors hover:bg-green-50">
+                            Schedule
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="content-overview" class="tab-content active space-y-6">
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <!-- Recent Reports -->
+                        <div class="bg-white border-2 border-green-200 rounded-lg">
+                            <div class="p-6 border-b border-green-200">
+                                <h3 class="text-xl font-bold text-green-900">Recent Reports</h3>
+                                <p class="text-sm text-gray-600">Latest issues submitted by residents</p>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <!-- Report 1 -->
+                                <div class="flex items-start justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <p class="font-semibold text-sm">Missed Collection</p>
+                                            <span class="text-xs bg-red-100 text-red-800 border border-red-300 px-2 py-1 rounded-full">high</span>
+                                        </div>
+                                        <p class="text-xs text-green-600 flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            </svg>
+                                            Aduas Centro, Zone 3
+                                        </p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-xs bg-blue-100 text-blue-800 border border-blue-300 px-2 py-1 rounded-full">in-progress</span>
+                                        <p class="text-xs text-gray-500 mt-1">2h ago</p>
+                                    </div>
+                                </div>
+
+                                <!-- Report 2 -->
+                                <div class="flex items-start justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <p class="font-semibold text-sm">Overflowing Bin</p>
+                                            <span class="text-xs bg-orange-100 text-orange-800 border border-orange-300 px-2 py-1 rounded-full">medium</span>
+                                        </div>
+                                        <p class="text-xs text-green-600 flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            </svg>
+                                            Bakod Bayan, Zone 1
+                                        </p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-xs bg-yellow-100 text-yellow-800 border border-yellow-300 px-2 py-1 rounded-full">pending</span>
+                                        <p class="text-xs text-gray-500 mt-1">5h ago</p>
+                                    </div>
+                                </div>
+
+                                <!-- Report 3 -->
+                                <div class="flex items-start justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <p class="font-semibold text-sm">Illegal Dumping</p>
+                                            <span class="text-xs bg-red-100 text-red-800 border border-red-300 px-2 py-1 rounded-full">high</span>
+                                        </div>
+                                        <p class="text-xs text-green-600 flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            </svg>
+                                            Magsaysay District, Zone 5
+                                        </p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-xs bg-yellow-100 text-yellow-800 border border-yellow-300 px-2 py-1 rounded-full">pending</span>
+                                        <p class="text-xs text-gray-500 mt-1">1d ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Collections -->
+                        <div class="bg-white border-2 border-green-200 rounded-lg">
+                            <div class="p-6 border-b border-green-200">
+                                <h3 class="text-xl font-bold text-green-900">Upcoming Collections</h3>
+                                <p class="text-sm text-gray-600">Next scheduled collection activities</p>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <!-- Collection 1 -->
+                                <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                    <div>
+                                        <p class="font-semibold text-sm">Aduas Centro</p>
+                                        <p class="text-xs text-gray-600 mt-1">Biodegradable</p>
+                                        <p class="text-xs text-blue-600 mt-1">342 households</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-semibold text-blue-900">Tomorrow</p>
+                                        <p class="text-xs text-blue-600">6:00 AM</p>
+                                    </div>
+                                </div>
+
+                                <!-- Collection 2 -->
+                                <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                    <div>
+                                        <p class="font-semibold text-sm">Bakod Bayan</p>
+                                        <p class="text-xs text-gray-600 mt-1">Recyclable</p>
+                                        <p class="text-xs text-blue-600 mt-1">285 households</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-semibold text-blue-900">Tomorrow</p>
+                                        <p class="text-xs text-blue-600">7:00 AM</p>
+                                    </div>
+                                </div>
+
+                                <!-- Collection 3 -->
+                                <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                    <div>
+                                        <p class="font-semibold text-sm">Bernardo District (Pob.)</p>
+                                        <p class="text-xs text-gray-600 mt-1">Non-Biodegradable</p>
+                                        <p class="text-xs text-blue-600 mt-1">198 households</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-semibold text-blue-900">Apr 11</p>
+                                        <p class="text-xs text-blue-600">7:00 AM</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports Tab -->
+                <div id="content-reports" class="tab-content space-y-4">
+                    <div class="bg-white border-2 border-green-200 rounded-lg">
+                        <div class="p-6 border-b border-green-200">
+                            <h3 class="text-xl font-bold text-green-900">All Resident Reports</h3>
+                            <p class="text-sm text-gray-600">Manage and respond to community issues</p>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <!-- Full Report 1 -->
+                            <div class="p-4 bg-white rounded-lg border border-green-200 hover:shadow-md transition-shadow">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h4 class="font-semibold">Missed Collection</h4>
+                                        <p class="text-sm text-gray-600 flex items-center gap-1 mt-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            </svg>
+                                            Aduas Centro, Zone 3
+                                        </p>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <span class="text-xs bg-red-100 text-red-800 border border-red-300 px-2 py-1 rounded-full">high</span>
+                                        <span class="text-xs bg-blue-100 text-blue-800 border border-blue-300 px-2 py-1 rounded-full">in-progress</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500">Submitted 2h ago</p>
+                            </div>
+
+                            <!-- Full Report 2 -->
+                            <div class="p-4 bg-white rounded-lg border border-green-200 hover:shadow-md transition-shadow">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h4 class="font-semibold">Overflowing Bin</h4>
+                                        <p class="text-sm text-gray-600 flex items-center gap-1 mt-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            </svg>
+                                            Bakod Bayan, Zone 1
+                                        </p>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <span class="text-xs bg-orange-100 text-orange-800 border border-orange-300 px-2 py-1 rounded-full">medium</span>
+                                        <span class="text-xs bg-yellow-100 text-yellow-800 border border-yellow-300 px-2 py-1 rounded-full">pending</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500">Submitted 5h ago</p>
+                            </div>
+
+                            <!-- Full Report 3 -->
+                            <div class="p-4 bg-white rounded-lg border border-green-200 hover:shadow-md transition-shadow">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h4 class="font-semibold">Illegal Dumping</h4>
+                                        <p class="text-sm text-gray-600 flex items-center gap-1 mt-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            </svg>
+                                            Magsaysay District, Zone 5
+                                        </p>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <span class="text-xs bg-red-100 text-red-800 border border-red-300 px-2 py-1 rounded-full">high</span>
+                                        <span class="text-xs bg-yellow-100 text-yellow-800 border border-yellow-300 px-2 py-1 rounded-full">pending</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500">Submitted 1d ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Tab -->
+                <div id="content-performance" class="tab-content space-y-4">
+                    <div class="bg-white border-2 border-green-200 rounded-lg">
+                        <div class="p-6 border-b border-green-200">
+                            <h3 class="text-xl font-bold text-green-900">Barangay Performance</h3>
+                            <p class="text-sm text-gray-600">Collection completion rates by area</p>
+                        </div>
+                        <div class="p-6 space-y-6">
+                            <!-- Barangay 1 -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <h4 class="font-semibold">Aduas Centro</h4>
+                                        <p class="text-sm text-gray-600">43 of 45 collections completed</p>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 border border-green-300 px-3 py-1 rounded-full text-sm font-medium">96%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 96%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Barangay 2 -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <h4 class="font-semibold">Bakod Bayan</h4>
+                                        <p class="text-sm text-gray-600">38 of 38 collections completed</p>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 border border-green-300 px-3 py-1 rounded-full text-sm font-medium">100%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 100%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Barangay 3 -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <h4 class="font-semibold">Bernardo District (Pob.)</h4>
+                                        <p class="text-sm text-gray-600">29 of 32 collections completed</p>
+                                    </div>
+                                    <span class="bg-orange-100 text-orange-800 border border-orange-300 px-3 py-1 rounded-full text-sm font-medium">91%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 91%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Barangay 4 -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <h4 class="font-semibold">Campo Tinio</h4>
+                                        <p class="text-sm text-gray-600">39 of 41 collections completed</p>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 border border-green-300 px-3 py-1 rounded-full text-sm font-medium">95%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 95%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schedule Tab -->
+                <div id="content-schedule" class="tab-content space-y-4">
+                    <div class="bg-white border-2 border-green-200 rounded-lg">
+                        <div class="p-6 border-b border-green-200">
+                            <h3 class="text-xl font-bold text-green-900">Collection Schedule Management</h3>
+                            <p class="text-sm text-gray-600">View and manage all scheduled collections</p>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <!-- Schedule 1 -->
+                            <div class="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-semibold text-green-900">Aduas Centro</h4>
+                                        <div class="flex items-center gap-4 mt-2 text-sm">
+                                            <span class="flex items-center gap-1 text-gray-600">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                </svg>
+                                                Tomorrow at 6:00 AM
+                                            </span>
+                                            <span class="border border-green-300 text-green-700 px-2 py-1 rounded-md text-xs">Biodegradable</span>
+                                        </div>
+                                        <p class="text-xs text-green-600 mt-2">Expected coverage: 342 households</p>
+                                    </div>
+                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Schedule 2 -->
+                            <div class="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-semibold text-green-900">Bakod Bayan</h4>
+                                        <div class="flex items-center gap-4 mt-2 text-sm">
+                                            <span class="flex items-center gap-1 text-gray-600">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                </svg>
+                                                Tomorrow at 7:00 AM
+                                            </span>
+                                            <span class="border border-green-300 text-green-700 px-2 py-1 rounded-md text-xs">Recyclable</span>
+                                        </div>
+                                        <p class="text-xs text-green-600 mt-2">Expected coverage: 285 households</p>
+                                    </div>
+                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Schedule 3 -->
+                            <div class="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-semibold text-green-900">Bernardo District (Pob.)</h4>
+                                        <div class="flex items-center gap-4 mt-2 text-sm">
+                                            <span class="flex items-center gap-1 text-gray-600">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                </svg>
+                                                Apr 11 at 7:00 AM
+                                            </span>
+                                            <span class="border border-green-300 text-green-700 px-2 py-1 rounded-md text-xs">Non-Biodegradable</span>
+                                        </div>
+                                        <p class="text-xs text-green-600 mt-2">Expected coverage: 198 households</p>
+                                    </div>
+                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center">
+                <p class="text-sm text-green-200">&copy; 2026 WasteWise. All rights reserved. Powered by Local Government Unit.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active state from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active', 'bg-green-600', 'text-white');
+            });
+
+            // Show selected tab content
+            document.getElementById('content-' + tabName).classList.add('active');
+
+            // Add active state to clicked button
+            const activeButton = document.getElementById('tab-' + tabName);
+            activeButton.classList.add('active', 'bg-green-600', 'text-white');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WasteWise Feedback</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen p-6">
+
+<div class="max-w-7xl mx-auto space-y-6">
+
+  <!-- Header -->
+  <div>
+    <h1 class="text-3xl font-bold text-green-900">WasteWise Feedback</h1>
+    <p class="text-green-600">Share your ideas to improve our waste management system</p>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6">
+
+    <!-- FORM -->
+    <div>
+      <div class="bg-white p-6 rounded-xl border border-green-200 sticky top-6">
+        <h2 class="font-bold text-lg text-green-900 mb-4">Submit Suggestion</h2>
+
+        <form id="feedbackForm" class="space-y-4">
+
+          <div>
+            <label class="text-sm font-medium">Category</label>
+            <select id="category" class="w-full border p-2 rounded mt-1" required>
+              <option value="">Select category</option>
+              <option>Schedule Improvement</option>
+              <option>Mobile App</option>
+              <option>Education</option>
+              <option>Rewards</option>
+              <option>Collection Service</option>
+              <option>Waste Facilities</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-sm font-medium">Title</label>
+            <input id="title" class="w-full border p-2 rounded mt-1" required>
+          </div>
+
+          <div>
+            <label class="text-sm font-medium">Description</label>
+            <textarea id="description" class="w-full border p-2 rounded mt-1" rows="4" required></textarea>
+          </div>
+
+          <button class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+            Submit Feedback
+          </button>
+        </form>
+      </div>
+
+      <!-- STATS -->
+      <div class="bg-white p-6 rounded-xl border border-green-200 mt-6">
+        <h2 class="font-bold mb-4 text-green-900">Community Impact</h2>
+        <div class="flex justify-between text-sm">
+          <span>Total Suggestions</span>
+          <span id="totalCount"></span>
+        </div>
+        <div class="flex justify-between text-sm mt-2">
+          <span>Implemented</span>
+          <span id="implementedCount"></span>
+        </div>
+        <div class="flex justify-between text-sm mt-2">
+          <span>Planned</span>
+          <span id="plannedCount"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div class="lg:col-span-2 space-y-4">
+
+      <div class="bg-white p-4 rounded-xl border border-green-200">
+        <h2 class="font-bold">Community Suggestions</h2>
+      </div>
+
+      <div id="feedbackList"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+let feedbacks = [
+  {
+    id: 1,
+    category: "Schedule Improvement",
+    title: "Add Saturday recyclables",
+    description: "Extra collection day for recyclables.",
+    author: "Juan D.",
+    date: "Apr 5, 2026",
+    votes: 24,
+    status: "under-review"
+  },
+  {
+    id: 2,
+    category: "Mobile App",
+    title: "Create mobile app",
+    description: "Better access via mobile.",
+    author: "Maria S.",
+    date: "Apr 3, 2026",
+    votes: 42,
+    status: "planned"
+  },
+  {
+    id: 3,
+    category: "Education",
+    title: "Monthly workshops",
+    description: "Teach segregation.",
+    author: "Pedro R.",
+    date: "Mar 28, 2026",
+    votes: 18,
+    status: "implemented"
+  }
+];
+
+let voted = [];
+
+function renderFeedbacks() {
+  const list = document.getElementById("feedbackList");
+  list.innerHTML = "";
+
+  feedbacks.sort((a,b)=>b.votes-a.votes);
+
+  let implemented = 0, planned = 0;
+
+  feedbacks.forEach(f => {
+    if(f.status==="implemented") implemented++;
+    if(f.status==="planned") planned++;
+
+    list.innerHTML += `
+      <div class="bg-white p-4 rounded-xl border border-green-200">
+        <div class="flex gap-4">
+
+          <!-- Vote -->
+          <button onclick="vote(${f.id})"
+            class="px-3 py-2 border rounded ${
+              voted.includes(f.id) ? 'bg-green-100' : ''
+            }">
+            👍 ${f.votes}
+          </button>
+
+          <!-- Content -->
+          <div>
+            <p class="text-xs text-green-700">${f.category}</p>
+            <h3 class="font-semibold">${f.title}</h3>
+            <p class="text-sm text-gray-600">${f.description}</p>
+            <p class="text-xs text-gray-400 mt-2">By ${f.author} • ${f.date}</p>
+          </div>
+
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById("totalCount").innerText = feedbacks.length;
+  document.getElementById("implementedCount").innerText = implemented;
+  document.getElementById("plannedCount").innerText = planned;
+}
+
+function vote(id){
+  if(voted.includes(id)){
+    voted = voted.filter(v=>v!==id);
+    feedbacks = feedbacks.map(f=> f.id===id ? {...f, votes:f.votes-1} : f);
+  } else {
+    voted.push(id);
+    feedbacks = feedbacks.map(f=> f.id===id ? {...f, votes:f.votes+1} : f);
+  }
+  renderFeedbacks();
+}
+
+document.getElementById("feedbackForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const newItem = {
+    id: Date.now(),
+    category: document.getElementById("category").value,
+    title: document.getElementById("title").value,
+    description: document.getElementById("description").value,
+    author: "You",
+    date: "Today",
+    votes: 0,
+    status: "under-review"
+  };
+
+  feedbacks.unshift(newItem);
+  renderFeedbacks();
+  this.reset();
+});
+
+renderFeedbacks();
+</script>
+
+</body>
+</html>
